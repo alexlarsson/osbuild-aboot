@@ -1,6 +1,6 @@
 Name:           osbuild-aboot
 Version:        0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        osbuild integration of aboot (test version)
 
 License:        GPLv2+
