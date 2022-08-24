@@ -17,14 +17,15 @@ import sys
 import osbuild.api
 
 
-SCHEMA = """
-"required": ["kernel"],
-"additionalProperties": false,
-"description": "Configure aboot.",
-"properties": {
-  "kernel": {
-    "description": "The version of the kernel",
-    "type": "string"
+SCHEMA_2 = """
+"options": {
+  "additionalProperties": false,
+  "required": ["kernel"],
+  "properties": {
+    "kernel": {
+      "description": "The version of the kernel",
+      "type": "string"
+    }
   }
 }
 """
@@ -33,9 +34,9 @@ SCHEMA = """
 def main(tree, options):
     kernel = options.get("kernel")
 
-    cmd = [
-        "/usr/bin/aboot-update", kernel, tree
-    ]
+    cmd = [ "/usr/bin/aboot-update", "-r", tree ]
+
+    cmd += [ kernel  ]
 
     subprocess.run(cmd, check=True)
 
