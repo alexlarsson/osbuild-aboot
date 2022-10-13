@@ -25,6 +25,11 @@ SCHEMA_2 = """
     "kernel": {
       "description": "The version of the kernel",
       "type": "string"
+    },
+    "preptree": {
+      "description": "True if we are preparing an ostree layout",
+      "type": "boolean",
+      "default": false
     }
   }
 }
@@ -33,10 +38,14 @@ SCHEMA_2 = """
 
 def main(tree, options):
     kernel = options.get("kernel")
+    preptree = options.get("preptree", False)
 
     cmd = [ "/usr/bin/aboot-update", "-r", tree ]
 
-    cmd += [ kernel  ]
+    if preptree:
+        cmd += [ "-p" ]
+
+    cmd += [ kernel ]
 
     subprocess.run(cmd, check=True)
 

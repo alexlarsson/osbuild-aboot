@@ -9,6 +9,7 @@ import subprocess
 import sys
 import fcntl
 import struct
+import re
 
 from urllib.parse import urlparse, ParseResult
 from typing import Dict
@@ -88,14 +89,24 @@ def main(args, devices, options):
     src = parse_location(options.get("from"), args)
     device = devices["device"]["path"]
 
+    if not os.path.exists(src): # ostree case
+        prefix = "/run/osbuild/inputs/tree/boot"
+        file = open(prefix + "/loader.1/entries/ostree-1-centos.conf", "r")
+        for src in file:
+            if re.search("^aboot ", src):
+                break
+
+        src = prefix + re.sub("^aboot ", "", src)
+        src = src.strip()
+        file.close()
+
     src_size = os.path.getsize(src)
-    print(f"src_size: {src_size}")
+    print(f"src: '{src}' src_size: {src_size}")
     device_size = blksize(device)
-    print(f"device_size: {device_size}")
+    print(f"device: '{device}' device_size: {device_size}")
 
     if src_size > device_size:
         raise ValueError(f"File to large for device")
-
 
     cmd = [ "dd", f"if={src}", f"of={device}"]
     print("Running {cmd}")

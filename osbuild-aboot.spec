@@ -1,6 +1,6 @@
 Name:           osbuild-aboot
 Version:        0.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        osbuild integration of aboot (test version)
 
 License:        GPLv2+
@@ -34,5 +34,8 @@ install -m755 %{SOURCE3} %{buildroot}%{_prefix}/lib/osbuild/stages/org.osbuildte
 %{_prefix}/lib/osbuild/stages/org.osbuildtest.write-device
 
 %changelog
+* Thu Jan 11 2023 Eric Curtin <ecurtin@redhat.com>
+- Handle ostree case
+
 * Fri Aug 19 2022 Alexander Larsson <alexl@redhat.com>
 - Initial version
