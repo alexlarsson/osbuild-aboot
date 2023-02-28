@@ -88,8 +88,6 @@ def main(args, devices, options):
     src = parse_location(options.get("from"), args)
     device = devices["device"]["path"]
 
-    subprocess.run(["ls", "-l", "/run/osbuild/inputs/tree/boot/"], check=True)
-
     src_size = os.path.getsize(src)
     print(f"src_size: {src_size}")
     device_size = blksize(device)
